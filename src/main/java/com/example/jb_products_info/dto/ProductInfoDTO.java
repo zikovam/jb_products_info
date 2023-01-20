@@ -17,17 +17,17 @@ import java.util.List;
 @Component
 @JsonInclude(Include.NON_NULL)
 public class ProductInfoDTO {
-    String name;
-    String version;
-    String versionSuffix;
-    String buildNumber;
-    String productCode;
-    String dataDirectoryName;
-    String svgIconPath;
-    String productVendor;
-    List<String> customProperties;
-    List<ProductLaunchInfoDTO> launch;
-    List<String> bundledPlugins;
-    List<String> modules;
-    List<String> fileExtensions;
+    private String name;
+    private String version;
+    private String versionSuffix;
+    private String buildNumber;
+    private String productCode;
+    private String dataDirectoryName;
+    private String svgIconPath;
+    private String productVendor;
+    private List<String> customProperties;
+    private List<ProductLaunchInfoDTO> launch;
+    private List<String> bundledPlugins;
+    private List<String> modules;
+    private List<String> fileExtensions;
 }

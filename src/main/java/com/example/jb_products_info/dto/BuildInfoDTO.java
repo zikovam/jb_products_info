@@ -14,9 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BuildInfoDTO {
     @JsonProperty("build-number")
-    String buildNumber;
-
+    private String buildNumber;
     @JsonProperty("product-info")
-    ProductInfoDTO productInfo;
+    private ProductInfoDTO productInfo;
 
 }

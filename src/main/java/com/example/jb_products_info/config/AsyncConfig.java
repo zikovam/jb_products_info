@@ -14,6 +14,7 @@ public class AsyncConfig
     @Bean
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        TODO: research about Executor to be able to run tasks in LIFO query
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(5);
         executor.setQueueCapacity(1000);

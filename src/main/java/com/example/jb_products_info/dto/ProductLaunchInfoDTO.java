@@ -12,12 +12,12 @@ import java.util.List;
 @Component
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductLaunchInfoDTO {
-    String os;
-    String arch;
-    String launcherPath;
-    String javaExecutablePath;
-    String vmOptionsFilePath;
-    String startupWmClass;
-    List<String> bootClassPathJarNames;
-    List<String> additionalJvmArguments;
+    private String os;
+    private String arch;
+    private String launcherPath;
+    private String javaExecutablePath;
+    private String vmOptionsFilePath;
+    private String startupWmClass;
+    private List<String> bootClassPathJarNames;
+    private List<String> additionalJvmArguments;
 }
