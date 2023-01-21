@@ -13,7 +13,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +35,10 @@ public class Product {
     private String name;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Build> builds;
+    @CreationTimestamp
+    private LocalDateTime createdDateTime;
+    @UpdateTimestamp
+    private LocalDateTime updatedDateTime;
 
     @Override
     public int hashCode() {

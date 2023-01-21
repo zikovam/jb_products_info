@@ -92,13 +92,12 @@ public class RefreshService {
         logger.info("downloading update.xml from URL: {}", jetbrainsUpdateFileUrl);
 
         URL url = new URL(jetbrainsUpdateFileUrl);
-        ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-        FileOutputStream fileOutputStream = new FileOutputStream(UPDATE_FILE_PATH);
-        fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-
-        logger.info("download was finished. file location: {}", UPDATE_FILE_PATH);
-        fileOutputStream.close();
-        readableByteChannel.close();
+        try (ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream())) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(UPDATE_FILE_PATH)) {
+                fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                logger.info("download was finished. file location: {}", UPDATE_FILE_PATH);
+            }
+        }
     }
 
     /**

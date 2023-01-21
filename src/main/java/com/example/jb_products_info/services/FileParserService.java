@@ -39,7 +39,7 @@ public class FileParserService {
     final Logger logger = LoggerFactory.getLogger(FileParserService.class);
     @Value("${download.build.info.url}")
     private String buildInfoDataDownloadUrl;
-    @Value("${avoided.codes}")
+    @Value("${codes.duplicated}")
     private List<String> codesToAvoid;
 
     public List<Product> collectProducts() throws FileNotFoundException, XMLStreamException {

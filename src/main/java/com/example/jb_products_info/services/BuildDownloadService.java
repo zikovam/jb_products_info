@@ -47,9 +47,11 @@ public class BuildDownloadService {
         buildInfos.forEach(future -> future.whenComplete((result, throwable) -> {
             if (throwable != null) {
                 logger.error(throwable.getMessage());
+                //TODO: reapply failed tasks
+
             } else {
                 //Not the most elegant solution
-                //We know that json file starts with {;
+                //We know that json file starts with '{'
                 //We also added buildNumber before this symbol
                 String buildNumber = result.substring(0, result.indexOf("{"));
                 logger.info("Information from build {} collected", buildNumber);

@@ -1,6 +1,7 @@
 package com.example.jb_products_info.controllers;
 
 import com.example.jb_products_info.dto.BuildInfoDTO;
+import com.example.jb_products_info.dto.SystemStatusDTO;
 import com.example.jb_products_info.exceptions.BuildNotFoundException;
 import com.example.jb_products_info.services.InfoService;
 import org.slf4j.Logger;
@@ -31,25 +32,26 @@ public class InfoController {
     }
 
     @GetMapping("status")
-    public void status() {
-        //TODO: implement
+    public SystemStatusDTO status() {
+        logger.info("Providing general status of the system");
+        return infoService.getStatus();
     }
 
     @GetMapping("{productCode}")
-    public List<BuildInfoDTO> productInfos(@PathVariable String productCode) {
+    public List<BuildInfoDTO> buildInfosForCode(@PathVariable String productCode) {
         logger.info("Providing info for product code: {}", productCode);
-        List<BuildInfoDTO> buildInfoList = infoService.getBuildInfoList(productCode);
-        if (buildInfoList.size() == 0) {
-            throw new BuildNotFoundException(); //TODO: think about it, still not so sure
+        List<BuildInfoDTO> buildInfoList = infoService.getBuildInfosByCode(productCode);
+        if (buildInfoList.isEmpty()) {
+            throw new BuildNotFoundException();
         }
         return buildInfoList;
     }
 
     @GetMapping("{productCode}/{buildNumber}")
-    public BuildInfoDTO productInfosForBuild(@PathVariable String productCode,
-                                             @PathVariable String buildNumber) {
+    public BuildInfoDTO buildInfo(@PathVariable String productCode,
+                                  @PathVariable String buildNumber) {
         logger.info("Providing info for product code: {} and build: {}", productCode, buildNumber);
-        BuildInfoDTO buildInfo = infoService.getBuildInfoBy(productCode, buildNumber);
+        BuildInfoDTO buildInfo = infoService.getBuildInfo(productCode, buildNumber);
         if (buildInfo == null) {
             throw new BuildNotFoundException();
         }

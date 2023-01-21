@@ -13,8 +13,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -35,7 +38,10 @@ public class Build {
     private String downloadUrl;
     @Lob
     private String productInfoJsonData;
-
+    @CreationTimestamp
+    private LocalDateTime createdDateTime;
+    @UpdateTimestamp
+    private LocalDateTime updatedDateTime;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
