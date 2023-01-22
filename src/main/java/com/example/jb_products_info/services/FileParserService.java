@@ -2,8 +2,8 @@ package com.example.jb_products_info.services;
 
 import com.example.jb_products_info.entities.Build;
 import com.example.jb_products_info.entities.Product;
-import com.example.jb_products_info.entities.buildInfo.JbDataServiceResponse;
-import com.example.jb_products_info.entities.buildInfo.Release;
+import com.example.jb_products_info.entities.build_info.JbDataServiceResponse;
+import com.example.jb_products_info.entities.build_info.Release;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import static com.example.jb_products_info.utils.Constants.UPDATE_FILE_PATH;
 
@@ -42,6 +42,15 @@ public class FileParserService {
     @Value("${codes.duplicated}")
     private List<String> codesToAvoid;
 
+    public Product collectProduct(String productCode) throws XMLStreamException, FileNotFoundException {
+        for (Product product : collectProducts()) {
+            if (product.getCode().equals(productCode)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
     public List<Product> collectProducts() throws FileNotFoundException, XMLStreamException {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         // preventing xxe
@@ -52,10 +61,10 @@ public class FileParserService {
         List<Product> products = parseUpdateXmlProducts(xmlInputFactory);
 
         logger.info("found products: {}: {}", products.size(),
-                products.stream().map(Product::getCode).sorted().collect(Collectors.toList()));
+                products.stream().map(Product::getCode).sorted().toList());
 
         logger.info("adding information about builds for products");
-        addBuildInfos(products);  //TODO: rework this method
+        addBuildInfos(products);
 
         return products;
     }
@@ -72,27 +81,25 @@ public class FileParserService {
             if (event.isStartElement()) {
                 StartElement element = event.asStartElement();
 
-                switch (element.getName().getLocalPart()) {
-                    case "product" -> {
-                        product = new Product();
-                        Attribute name = element.getAttributeByName(new QName("name"));
-                        if (name != null) {
-                            product.setName(name.getValue());
-                        }
+                String localPart = element.getName().getLocalPart();
+                if (localPart.equals("product")) {
+                    product = new Product();
+                    Attribute name = element.getAttributeByName(new QName("name"));
+                    if (name != null) {
+                        product.setName(name.getValue());
                     }
-                    case "code" -> {
-                        event = reader.nextEvent();
-                        String code = event.asCharacters().getData();
-                        if (!codesToAvoid.contains(code)) {
-                            if (product.getCode() == null) {
-                                product.setCode(code);
-                            } else {
-                                String name = product.getName();
-                                products.add(product);
-                                product = new Product();
-                                product.setName(name);
-                                product.setCode(code);
-                            }
+                } else if (localPart.equals("code")) {
+                    event = reader.nextEvent();
+                    String code = event.asCharacters().getData();
+                    if (!codesToAvoid.contains(code)) {
+                        if (Objects.requireNonNull(product).getCode() == null) {
+                            product.setCode(code);
+                        } else {
+                            String name = product.getName();
+                            products.add(product);
+                            product = new Product();
+                            product.setName(name);
+                            product.setCode(code);
                         }
                     }
                 }
@@ -107,7 +114,7 @@ public class FileParserService {
         return products;
     }
 
-    private void addBuildInfos(List<Product> products) { //TODO: rework
+    private void addBuildInfos(List<Product> products) {
         for (Product product : products) {
             JbDataServiceResponse productInfo = getJbDataServiceResponse(product);
 
@@ -140,15 +147,14 @@ public class FileParserService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("accept", "application/json");
-        HttpEntity requestEntity = new HttpEntity<>(null, headers);
 
         ResponseEntity<List<JbDataServiceResponse>> response = restTemplate.exchange(
                 uriBuilder.build().toUriString(),
                 HttpMethod.GET,
-                requestEntity,
+                new HttpEntity<>(null, headers),
                 new ParameterizedTypeReference<>() {
                 });
 
-        return response.getBody().get(0);
+        return Objects.requireNonNull(response.getBody()).get(0);
     }
 }

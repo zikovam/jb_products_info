@@ -1,4 +1,4 @@
-package com.example.jb_products_info.entities.buildInfo;
+package com.example.jb_products_info.entities.build_info;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

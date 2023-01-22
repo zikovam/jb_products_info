@@ -56,7 +56,7 @@ public class BuildDownloadTask {
                 break;
             }
 //            TODO: think about possibility to track progress.
-//                  We uncompressing archive on the fly, so sizes can't be compared
+//                  Problem: uncompressed archive on the fly, has greater size than original
         }
         logger.info("red {} bytes", tarInputStream.getBytesRead());
 

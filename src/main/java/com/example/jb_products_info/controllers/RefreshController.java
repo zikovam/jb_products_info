@@ -22,11 +22,12 @@ public class RefreshController {
     @GetMapping
     public void refreshInformation() {
         logger.info("Refreshing all information");
-        refreshService.updateData();
+        refreshService.updateData(); //TODO: maybe better to response with some data
     }
 
     @GetMapping("/{productCode}")
     public void refreshForProduct(@PathVariable String productCode) {
-        //TODO: implement
+        logger.info("Refreshing information about {} product", productCode);
+        refreshService.updateData(productCode); //TODO: maybe better to response with some data
     }
 }
