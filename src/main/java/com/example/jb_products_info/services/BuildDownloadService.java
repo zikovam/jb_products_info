@@ -47,7 +47,6 @@ public class BuildDownloadService {
         buildInfos.forEach(future -> future.whenComplete((result, throwable) -> {
             if (throwable != null) {
                 logger.error(throwable.getMessage());
-                //TODO: think about reapplying failed tasks
             } else {
                 //Not the most elegant solution
                 //We know that json file starts with '{'

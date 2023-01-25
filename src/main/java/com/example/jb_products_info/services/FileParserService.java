@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.example.jb_products_info.utils.Constants.UPDATE_FILE_PATH;
+import static com.example.jb_products_info.utils.Constants.UPDATE_XML_FILE_PATH;
 
 @Service
 public class FileParserService {
@@ -57,12 +57,10 @@ public class FileParserService {
         xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
-        logger.info("parsing update.xml from file {}", UPDATE_FILE_PATH);
+        logger.info("parsing update.xml from file {}", UPDATE_XML_FILE_PATH);
         List<Product> products = parseUpdateXmlProducts(xmlInputFactory);
 
-        logger.info("found products: {}: {}", products.size(),
-                products.stream().map(Product::getCode).sorted().toList());
-
+        logger.info("found products in file: {}", products.size());
         logger.info("adding information about builds for products");
         addBuildInfos(products);
 
@@ -72,7 +70,7 @@ public class FileParserService {
     private List<Product> parseUpdateXmlProducts(XMLInputFactory xmlInputFactory) throws XMLStreamException, FileNotFoundException {
         List<Product> products = new ArrayList<>();
 
-        XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(UPDATE_FILE_PATH));
+        XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(UPDATE_XML_FILE_PATH));
 
         Product product = null;
         while (reader.hasNext()) {

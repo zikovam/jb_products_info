@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,42 +34,45 @@ public class ProductService {
 
         List<Build> buildsToDownload = new ArrayList<>();
 
-        if (storedProducts.size() != parsedProducts.size()) {
             parsedProducts.removeAll(storedProducts);
-            logger.info("found {} new products", parsedProducts.size());
-
-            buildsToDownload.addAll(parsedProducts.stream()
-                    .map(Product::getBuilds)
-                    .flatMap(Collection::stream)
-                    .toList());
-            productRepository.saveAllAndFlush(parsedProducts);
-        }
+            logger.info("found {} new or updated products", parsedProducts.size());
 
         // updating every stored product with new builds we found
-        for (Product product : storedProducts) {
-            List<Build> storedBuilds = product.getBuilds();
+        for (Product parsedProduct : parsedProducts) {
+            List<Build> parsedBuilds = parsedProduct.getBuilds();
 
-            Optional<Product> parsedProduct = parsedProducts.stream()
-                    .filter(prod -> prod.getCode().equals(product.getCode()))
+            Optional<Product> storedProduct = storedProducts.stream()
+                    .filter(prod -> prod.getCode().equals(parsedProduct.getCode()))
                     .findFirst();
 
-            if (parsedProduct.isPresent()) {
-                List<Build> parsedBuilds = parsedProduct.get().getBuilds();
+            if (storedProduct.isPresent()) {
+                List<Build> storedBuilds = storedProduct.get().getBuilds();
 
                 parsedBuilds.removeAll(storedBuilds);
-                parsedBuilds.forEach(build -> build.setProduct(product));
+                parsedBuilds.forEach(build -> build.setProduct(storedProduct.get()));
 
                 buildsToDownload.addAll(parsedBuilds);
-
                 storedBuilds.addAll(parsedBuilds);
+
+                logger.info("Product {} is updated with {} new builds",
+                        storedProduct.get().getCode(), parsedBuilds.size());
+            } else {
+                storedProducts.add(parsedProduct);
+                buildsToDownload.addAll(parsedProduct.getBuilds());
+
+                logger.info("Product {} is new with {} new builds",
+                        parsedProduct.getCode(), parsedBuilds.size());
             }
         }
-        logger.info("found {} new builds", buildsToDownload.size());
         productRepository.saveAllAndFlush(storedProducts);
 
         return buildsToDownload;
     }
 
+    /**
+     * @param parsedProduct product to be checked
+     * @return list of new builds, needed to be processed
+     */
     @Transactional
     public List<Build> upsert(Product parsedProduct){
         Product storedProduct = productRepository.findByCode(parsedProduct.getCode());
