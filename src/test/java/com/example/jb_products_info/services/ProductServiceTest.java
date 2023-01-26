@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,18 +71,18 @@ class ProductServiceTest {
         product2 = Product.builder()
                 .code("CODE2")
                 .name("Test name 2")
-                .builds(new ArrayList<>(Arrays.asList(build3)))
+                .builds(new ArrayList<>(Collections.singletonList(build3)))
                 .build();
         product3 = Product.builder()
                 .code("CODE3")
                 .name("Test name 3")
-                .builds(new ArrayList<>(Arrays.asList(build4)))
+                .builds(new ArrayList<>(Collections.singletonList(build4)))
                 .build();
     }
 
     @Test
     void testUpsertAll_newProducts() {
-        List<Product> storedProducts = new ArrayList<>(Arrays.asList(product1));
+        List<Product> storedProducts = new ArrayList<>(Collections.singletonList(product1));
         List<Product> parsedProducts = new ArrayList<>(Arrays.asList(product1, product2));
 
         when(productRepository.findAll()).thenReturn(storedProducts);
@@ -100,7 +101,7 @@ class ProductServiceTest {
         Product product2Alt = Product.builder()
                 .code("CODE2")
                 .name("Test name 2")
-                .builds(new ArrayList<>(Arrays.asList(build2)))
+                .builds(new ArrayList<>(Collections.singletonList(build2)))
                 .build();
         List<Product> storedProducts = new ArrayList<>(Arrays.asList(product1, product2));
         List<Product> parsedProducts = new ArrayList<>(Arrays.asList(product1, product2Alt));
@@ -112,6 +113,7 @@ class ProductServiceTest {
 
         assertEquals(1, buildsToDownload.size());
         assertEquals(build2, buildsToDownload.get(0));
+        verify(productRepository, times(1)).findAll();
         verify(productRepository, times(1)).saveAllAndFlush(storedProducts);
     }
 
@@ -127,7 +129,21 @@ class ProductServiceTest {
 
         assertEquals(1, buildsToDownload.size());
         assertEquals(build4, buildsToDownload.get(0));
+        verify(productRepository, times(1)).findAll();
         verify(productRepository, times(1)).saveAllAndFlush(storedProducts);
+    }
+
+    @Test
+    void testUpsertAll_storedMoreThanParsed() {
+        List<Product> storedProducts = new ArrayList<>(Arrays.asList(product1, product2));
+        List<Product> parsedProducts = new ArrayList<>(Collections.singletonList(product1));
+
+        when(productRepository.findAll()).thenReturn(storedProducts);
+
+        List<Build> buildsToDownload = productService.upsertAll(parsedProducts);
+
+        assertEquals(0, buildsToDownload.size());
+        verify(productRepository, times(1)).findAll();
     }
 
     @Test
@@ -165,5 +181,23 @@ class ProductServiceTest {
         assertEquals(build3, buildsToDownload.get(0));
         verify(productRepository, times(1)).findByCode(product1Alt.getCode());
         verify(productRepository, times(1)).saveAndFlush(storedProduct);
+    }
+
+    @Test
+    void testUpsert_storedMoreBuilds(){
+        Product storedProduct = product1;
+
+        Product product1Alt = Product.builder()
+                .code("CODE1")
+                .name("Test name 1")
+                .builds(new ArrayList<>(Collections.singletonList(build2)))
+                .build();
+
+        when(productRepository.findByCode(product1Alt.getCode())).thenReturn(storedProduct);
+
+        List<Build> buildsToDownload = productService.upsert(product1Alt);
+
+        assertEquals(0, buildsToDownload.size());
+        verify(productRepository, times(1)).findByCode(product1Alt.getCode());
     }
 }

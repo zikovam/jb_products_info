@@ -34,9 +34,9 @@ public class ProductService {
 
         List<Build> buildsToDownload = new ArrayList<>();
 
-            parsedProducts.removeAll(storedProducts);
-            logger.info("found {} new or updated products", parsedProducts.size());
+        parsedProducts.removeAll(storedProducts);
 
+        int newOrUpdatedProducts = 0;
         // updating every stored product with new builds we found
         for (Product parsedProduct : parsedProducts) {
             List<Build> parsedBuilds = parsedProduct.getBuilds();
@@ -47,16 +47,21 @@ public class ProductService {
 
             if (storedProduct.isPresent()) {
                 List<Build> storedBuilds = storedProduct.get().getBuilds();
-
                 parsedBuilds.removeAll(storedBuilds);
-                parsedBuilds.forEach(build -> build.setProduct(storedProduct.get()));
 
-                buildsToDownload.addAll(parsedBuilds);
-                storedBuilds.addAll(parsedBuilds);
+                if (!parsedBuilds.isEmpty()) {
+                    newOrUpdatedProducts++;
 
-                logger.info("Product {} is updated with {} new builds",
-                        storedProduct.get().getCode(), parsedBuilds.size());
+                    parsedBuilds.forEach(build -> build.setProduct(storedProduct.get()));
+                    buildsToDownload.addAll(parsedBuilds);
+                    storedBuilds.addAll(parsedBuilds);
+
+                    logger.info("Product {} is updated with {} new builds",
+                            storedProduct.get().getCode(), parsedBuilds.size());
+                }
             } else {
+                newOrUpdatedProducts++;
+
                 storedProducts.add(parsedProduct);
                 buildsToDownload.addAll(parsedProduct.getBuilds());
 
@@ -64,7 +69,10 @@ public class ProductService {
                         parsedProduct.getCode(), parsedBuilds.size());
             }
         }
-        productRepository.saveAllAndFlush(storedProducts);
+        logger.info("Totally found {} new or updated products", newOrUpdatedProducts);
+        if (newOrUpdatedProducts > 0) {
+            productRepository.saveAllAndFlush(storedProducts);
+        }
 
         return buildsToDownload;
     }
@@ -74,11 +82,11 @@ public class ProductService {
      * @return list of new builds, needed to be processed
      */
     @Transactional
-    public List<Build> upsert(Product parsedProduct){
+    public List<Build> upsert(Product parsedProduct) {
         Product storedProduct = productRepository.findByCode(parsedProduct.getCode());
         List<Build> buildsToDownload = new ArrayList<>();
 
-        if (storedProduct == null){
+        if (storedProduct == null) {
             logger.info("found new product {}", parsedProduct.getCode());
             buildsToDownload.addAll(parsedProduct.getBuilds());
             productRepository.saveAndFlush(parsedProduct);
@@ -87,19 +95,22 @@ public class ProductService {
             List<Build> parsedBuilds = parsedProduct.getBuilds();
 
             parsedBuilds.removeAll(storedBuilds);
-            parsedBuilds.forEach(build -> build.setProduct(storedProduct));
+            if (!parsedBuilds.isEmpty()) {
+                parsedBuilds.forEach(build -> build.setProduct(storedProduct));
 
-            buildsToDownload.addAll(parsedBuilds);
-            storedBuilds.addAll(parsedBuilds);
+                buildsToDownload.addAll(parsedBuilds);
+                storedBuilds.addAll(parsedBuilds);
 
-            productRepository.saveAndFlush(storedProduct);
+                productRepository.saveAndFlush(storedProduct);
+            }
         }
-        logger.info("found {} new builds", buildsToDownload.size());
+        logger.info("found {} new builds for product {}",
+                buildsToDownload.size(), parsedProduct.getCode());
         return buildsToDownload;
     }
 
     @Transactional
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 }

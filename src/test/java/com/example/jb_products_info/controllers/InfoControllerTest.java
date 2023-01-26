@@ -46,7 +46,7 @@ class InfoControllerTest {
                 .countProducts(productCodes.size())
                 .productCodes(productCodes)
                 .countBuilds(700)
-                .downloadedBuilds(100)
+                .buildsDownloaded(100)
                 .buildsDownloading(5)
                 .buildsDownloadQueue(545)
                 .buildsWithoutLinuxVersion(50)

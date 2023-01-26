@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "c71cbf33-f6de-4225-8148-22f862af468a",
+		"name": "JB_Test_Task_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1478964"
+	},
+	"item": [
+		{
+			"name": "GetStatusHtml",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetStatusHtml",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "933"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 26 Jan 2023 22:22:19 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "<html>\n    <header>\n        <title>\n        Status\n    </title>\n    </header>\n    <body>\n        <h1>Status:</h1>\n        <table>\n            <tbody>\n                <tr>\n                    <td>Last updated</td>\n                    <td>2023-01-26T23:22:16.629135</td>\n                </tr>\n                <tr>\n                    <td>Server timezone</td>\n                    <td>Europe/Warsaw</td>\n                </tr>\n                <tr>\n                    <td>Total products stored</td>\n                    <td>19</td>\n                </tr>\n                <tr>\n                    <td>Total builds stored</td>\n                    <td>702</td>\n                </tr>\n                <tr>\n                    <td>Total builds with product-info.json data</td>\n                    <td>23</td>\n                </tr>\n                <tr>\n                    <td>Builds downloading now</td>\n                    <td>5</td>\n                </tr>\n                <tr>\n                    <td>Builds waiting for download</td>\n                    <td>637</td>\n                </tr>\n                <tr>\n                    <td>Builds without Linux version</td>\n                    <td>37</td>\n                </tr>\n            </tbody>\n        </table>\n        <h2>Products:</h2>\n        <p>[PS, GO, CL, PY, IU, DS, PCA, QA, GW, MPS, RD, OC, RDCPPP, PE, IC, RM, IE, WS, DB]</p>\n    </body>\n</html>"
+				}
+			]
+		},
+		{
+			"name": "GetStatusJson",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/status",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetStatusJson",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 26 Jan 2023 22:11:17 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"lastUpdated\": \"2023-01-26T23:10:43.783839\",\n    \"serverTimezone\": \"Europe/Warsaw\",\n    \"countProducts\": 19,\n    \"productCodes\": [\n        \"PS\",\n        \"GO\",\n        \"CL\",\n        \"PY\",\n        \"IU\",\n        \"DS\",\n        \"PCA\",\n        \"QA\",\n        \"GW\",\n        \"MPS\",\n        \"RD\",\n        \"OC\",\n        \"RDCPPP\",\n        \"PE\",\n        \"IC\",\n        \"RM\",\n        \"IE\",\n        \"WS\",\n        \"DB\"\n    ],\n    \"countBuilds\": 702,\n    \"buildsDownloaded\": 20,\n    \"buildsDownloading\": 5,\n    \"buildsDownloadQueue\": 640,\n    \"buildsWithoutLinuxVersion\": 37\n}"
+				}
+			]
+		},
+		{
+			"name": "GetBuildsInfoByProductCode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{code}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{code}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "BuildsInfo",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{code}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{code}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 26 Jan 2023 22:14:41 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"build-number\": \"231.4840.387\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.8617.20\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.8617.9\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.8214.52\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.8214.27\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.8214.16\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7571.182\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7571.123\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7571.58\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7571.4\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7401.7\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7255.1\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.7126.7\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.6646.99\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.6160.11\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.4884.69\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4459.24\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4459.16\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4459.4\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4345.14\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4345.6\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4167.29\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4167.21\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.4167.9\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3739.54\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3739.40\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3739.24\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3345.118\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3345.90\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3345.47\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3345.16\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3244.4\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3153.4\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.3048.13\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.2964.55\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.2889.14\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.2680.4\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"222.2270.31\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.6008.13\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.6008.8\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.6008.1\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5921.22\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5921.17\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5921.2\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5787.30\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5787.20\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5787.3\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5591.52\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5591.41\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5591.19\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5080.210\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5080.169\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5080.93\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5080.56\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.5080.9\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.4994.44\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.4906.8\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.4501.155\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.4165.146\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"221.3427.89\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"213.7172.25\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"213.7172.12\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"213.7172.6\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"213.6777.52\",\n        \"product-info\": null\n    },\n    {\n        \"build-number\": \"223.8617.56\",\n        \"product-info\": null\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetBuildInfoByProductCodeAndBuildNumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{code}}/{{buildNumber}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{code}}",
+						"{{buildNumber}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetBuildInfoByProductCodeAndBuildNumber",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{code}}/{{buildNumber}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{code}}",
+								"{{buildNumber}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Disposition",
+							"value": "inline;filename=f.txt"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 26 Jan 2023 22:18:13 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"build-number\": \"231.5920.6\",\n    \"product-info\": {\n        \"name\": \"CLion\",\n        \"version\": \"2023.1\",\n        \"versionSuffix\": \"EAP\",\n        \"buildNumber\": \"231.5920.6\",\n        \"productCode\": \"CL\",\n        \"dataDirectoryName\": \"CLion2023.1\",\n        \"svgIconPath\": \"bin/clion.svg\",\n        \"productVendor\": \"JetBrains\",\n        \"launch\": [\n            {\n                \"os\": \"Linux\",\n                \"arch\": \"amd64\",\n                \"launcherPath\": \"bin/clion.sh\",\n                \"javaExecutablePath\": \"jbr/bin/java\",\n                \"vmOptionsFilePath\": \"bin/clion64.vmoptions\",\n                \"startupWmClass\": \"jetbrains-clion\",\n                \"bootClassPathJarNames\": [\n                    \"app.jar\",\n                    \"3rd-party-rt.jar\",\n                    \"util.jar\",\n                    \"util_rt.jar\",\n                    \"util-8.jar\",\n                    \"platform-statistics-devkit.jar\",\n                    \"jps-model.jar\",\n                    \"stats.jar\",\n                    \"protobuf.jar\",\n                    \"external-system-rt.jar\",\n                    \"intellij-test-discovery.jar\",\n                    \"forms_rt.jar\",\n                    \"rd.jar\",\n                    \"externalProcess-rt.jar\",\n                    \"3rd-party-native.jar\",\n                    \"annotations-java5.jar\",\n                    \"async-profiler-windows.jar\",\n                    \"async-profiler.jar\",\n                    \"byte-buddy-agent.jar\",\n                    \"error-prone-annotations.jar\",\n                    \"groovy.jar\",\n                    \"intellij-coverage-agent-1.0.691.jar\",\n                    \"jetbrains-annotations.jar\",\n                    \"jsch-agent.jar\",\n                    \"junit4.jar\",\n                    \"junit5.jar\",\n                    \"platform-objectSerializer-annotations.jar\"\n                ],\n                \"additionalJvmArguments\": [\n                    \"-Djava.system.class.loader=com.intellij.util.lang.PathClassLoader\",\n                    \"-Didea.vendor.name=JetBrains\",\n                    \"-Didea.paths.selector=CLion2023.1\",\n                    \"-Djna.boot.library.path=$IDE_HOME/lib/jna/amd64\",\n                    \"-Dpty4j.preferred.native.folder=$IDE_HOME/lib/pty4j\",\n                    \"-Djna.nosys=true\",\n                    \"-Djna.noclasspath=true\",\n                    \"-Didea.platform.prefix=CLion\",\n                    \"-Dsplash=true\",\n                    \"--add-opens=java.base/java.io=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.lang=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.lang.ref=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.lang.reflect=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.net=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.nio=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.nio.charset=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.text=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.time=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.util=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.util.concurrent=ALL-UNNAMED\",\n                    \"--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED\",\n                    \"--add-opens=java.base/jdk.internal.vm=ALL-UNNAMED\",\n                    \"--add-opens=java.base/sun.nio.ch=ALL-UNNAMED\",\n                    \"--add-opens=java.base/sun.nio.fs=ALL-UNNAMED\",\n                    \"--add-opens=java.base/sun.security.ssl=ALL-UNNAMED\",\n                    \"--add-opens=java.base/sun.security.util=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/com.sun.java.swing.plaf.gtk=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/java.awt=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/java.awt.dnd.peer=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/java.awt.event=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/java.awt.image=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/java.awt.peer=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/java.awt.font=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/javax.swing=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/javax.swing.text.html=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.awt.datatransfer=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.awt.image=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.awt=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.font=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.java2d=ALL-UNNAMED\",\n                    \"--add-opens=java.desktop/sun.swing=ALL-UNNAMED\",\n                    \"--add-opens=jdk.attach/sun.tools.attach=ALL-UNNAMED\",\n                    \"--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED\",\n                    \"--add-opens=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED\",\n                    \"--add-opens=jdk.jdi/com.sun.tools.jdi=ALL-UNNAMED\"\n                ]\n            }\n        ],\n        \"bundledPlugins\": [\n            \"AngularJS\",\n            \"Docker\",\n            \"Git4Idea\",\n            \"HtmlTools\",\n            \"JSIntentionPowerPack\",\n            \"JavaScript\",\n            \"JavaScriptDebugger\",\n            \"Karma\",\n            \"NodeJS\",\n            \"PerforceDirectPlugin\",\n            \"Remote Development Server\",\n            \"Subversion\",\n            \"XPathView\",\n            \"com.deadlock.scsyntax\",\n            \"com.intellij\",\n            \"com.intellij.CloudConfig\",\n            \"com.intellij.c.performanceTesting\",\n            \"com.intellij.cidr.base\",\n            \"com.intellij.cidr.compiler.custom\",\n            \"com.intellij.cidr.completion.ml.ranking\",\n            \"com.intellij.cidr.copyright\",\n            \"com.intellij.cidr.grazie\",\n            \"com.intellij.cidr.lang\",\n            \"com.intellij.cidr.lang.clangd\",\n            \"com.intellij.cidr.lang.clangdBridge\",\n            \"com.intellij.cidr.markdown\",\n            \"com.intellij.clion\",\n            \"com.intellij.clion-compdb\",\n            \"com.intellij.clion-makefile\",\n            \"com.intellij.clion.embedded\",\n            \"com.intellij.clion.performanceTesting\",\n            \"com.intellij.clion.runFile\",\n            \"com.intellij.clion.rust.helper\",\n            \"com.intellij.completion.ml.ranking\",\n            \"com.intellij.completion.ml.ranking.models\",\n            \"com.intellij.configurationScript\",\n            \"com.intellij.copyright\",\n            \"com.intellij.cpp-diagnostics\",\n            \"com.intellij.css\",\n            \"com.intellij.database\",\n            \"com.intellij.dev\",\n            \"com.intellij.diagram\",\n            \"com.intellij.lang.qml\",\n            \"com.intellij.nativeDebug\",\n            \"com.intellij.platform.images\",\n            \"com.intellij.plugins.all_hallows_eve.colorscheme\",\n            \"com.intellij.plugins.blackboard.colorscheme\",\n            \"com.intellij.plugins.cidr.solarized.colorscheme\",\n            \"com.intellij.plugins.cobalt.colorscheme\",\n            \"com.intellij.plugins.dawm.colorscheme\",\n            \"com.intellij.plugins.eclipsekeymap\",\n            \"com.intellij.plugins.espresso.colorscheme\",\n            \"com.intellij.plugins.github.colorscheme\",\n            \"com.intellij.plugins.monokai.colorscheme\",\n            \"com.intellij.plugins.netbeanskeymap\",\n            \"com.intellij.plugins.qtcreatorkeymap\",\n            \"com.intellij.plugins.rails_casts.colorscheme\",\n            \"com.intellij.plugins.resharperkeymap\",\n            \"com.intellij.plugins.twilight.colorscheme\",\n            \"com.intellij.plugins.vibrantink.colorscheme\",\n            \"com.intellij.plugins.visualstudiokeymap\",\n            \"com.intellij.plugins.warmneon.colorscheme\",\n            \"com.intellij.plugins.webcomponents\",\n            \"com.intellij.plugins.xcode.colorscheme\",\n            \"com.intellij.plugins.xcodekeymap\",\n            \"com.intellij.searcheverywhere.ml\",\n            \"com.intellij.settingsSync\",\n            \"com.intellij.stats.completion\",\n            \"com.intellij.tailwindcss\",\n            \"com.intellij.tasks\",\n            \"com.intellij.tasks.timeTracking\",\n            \"com.intellij.testFramework.core\",\n            \"com.jetbrains.clion.plugins.packageManager\",\n            \"com.jetbrains.clion.plugins.webDeployment\",\n            \"com.jetbrains.codeWithMe\",\n            \"com.jetbrains.gateway\",\n            \"com.jetbrains.gateway.terminal\",\n            \"com.jetbrains.linkerscript\",\n            \"com.jetbrains.performancePlugin\",\n            \"com.jetbrains.performancePlugin.async\",\n            \"com.jetbrains.performancePlugin.yourkit\",\n            \"com.jetbrains.plugins.webDeployment\",\n            \"com.jetbrains.projector.libs\",\n            \"com.jetbrains.restClient\",\n            \"com.jetbrains.sh\",\n            \"com.jetbrains.space\",\n            \"hg4idea\",\n            \"intellij.grid.core.impl\",\n            \"intellij.grid.impl\",\n            \"intellij.nextjs\",\n            \"intellij.prettierJS\",\n            \"intellij.vitejs\",\n            \"intellij.webpack\",\n            \"name.kropp.intellij.makefile\",\n            \"org.intellij.intelliLang\",\n            \"org.intellij.plugins.markdown\",\n            \"org.jetbrains.plugins.cidr-intelliLang\",\n            \"org.jetbrains.plugins.clangConfig\",\n            \"org.jetbrains.plugins.clangFormat\",\n            \"org.jetbrains.plugins.clion.ctest\",\n            \"org.jetbrains.plugins.clion.test.boost\",\n            \"org.jetbrains.plugins.clion.test.catch\",\n            \"org.jetbrains.plugins.clion.test.doctest\",\n            \"org.jetbrains.plugins.clion.test.google\",\n            \"org.jetbrains.plugins.github\",\n            \"org.jetbrains.plugins.less\",\n            \"org.jetbrains.plugins.node-remote-interpreter\",\n            \"org.jetbrains.plugins.remote-run\",\n            \"org.jetbrains.plugins.sass\",\n            \"org.jetbrains.plugins.terminal\",\n            \"org.jetbrains.plugins.textmate\",\n            \"org.jetbrains.plugins.vue\",\n            \"org.jetbrains.plugins.yaml\",\n            \"org.toml.lang\",\n            \"tanvd.grazi\",\n            \"tslint\"\n        ],\n        \"modules\": [\n            \"com.intellij.lsp\",\n            \"com.intellij.modules.c-capable\",\n            \"com.intellij.modules.cidr.debugger\",\n            \"com.intellij.modules.cidr.doxygen\",\n            \"com.intellij.modules.cidr.lang\",\n            \"com.intellij.modules.cidr.modulemap.language\",\n            \"com.intellij.modules.clion\",\n            \"com.intellij.modules.clion.cmake\",\n            \"com.intellij.modules.clion.compdb\",\n            \"com.intellij.modules.clion.diagnostics\",\n            \"com.intellij.modules.clion.ide\",\n            \"com.intellij.modules.cmake\",\n            \"com.intellij.modules.coverage\",\n            \"com.intellij.modules.database\",\n            \"com.intellij.modules.database.connectivity\",\n            \"com.intellij.modules.database.core\",\n            \"com.intellij.modules.duplicatesDetector\",\n            \"com.intellij.modules.externalSystem\",\n            \"com.intellij.modules.json\",\n            \"com.intellij.modules.lang\",\n            \"com.intellij.modules.microservices\",\n            \"com.intellij.modules.nativeDebug-plugin-capable\",\n            \"com.intellij.modules.platform\",\n            \"com.intellij.modules.python-core-capable\",\n            \"com.intellij.modules.remoteServers\",\n            \"com.intellij.modules.run.targets\",\n            \"com.intellij.modules.sql\",\n            \"com.intellij.modules.ssh\",\n            \"com.intellij.modules.ssh.ui\",\n            \"com.intellij.modules.structuralsearch\",\n            \"com.intellij.modules.ultimate\",\n            \"com.intellij.modules.vcs\",\n            \"com.intellij.modules.xdebugger\",\n            \"com.intellij.modules.xml\",\n            \"com.intellij.platform.linux\",\n            \"com.intellij.platform.unix\",\n            \"com.intellij.platform.xwindow\",\n            \"intellij.angularJS/diagram\",\n            \"intellij.c.performanceTesting\",\n            \"intellij.cidr.completionMlRanking\",\n            \"intellij.cidr.copyright\",\n            \"intellij.cidr.grazie\",\n            \"intellij.cidr.markdown\",\n            \"intellij.clion.performanceTesting\",\n            \"intellij.cloudConfig.migrationToSettingsSync\",\n            \"intellij.clouds.docker.compose\",\n            \"intellij.clouds.docker.file\",\n            \"intellij.clouds.docker.java\",\n            \"intellij.clouds.docker.remoteRun\",\n            \"intellij.clouds.docker.ssh\",\n            \"intellij.database.diagrams\",\n            \"intellij.database.flameGraphs\",\n            \"intellij.dev.psiViewer\",\n            \"intellij.diagram.impl/vcs\",\n            \"intellij.diagram.java\",\n            \"intellij.diagram.properties\",\n            \"intellij.grazie.java\",\n            \"intellij.grazie.json\",\n            \"intellij.grazie.markdown\",\n            \"intellij.grazie.properties\",\n            \"intellij.grazie.xml\",\n            \"intellij.grazie.yaml\",\n            \"intellij.javascript.debugger.javaee\",\n            \"intellij.javascript.debugger.nashorn\",\n            \"intellij.javascript.devkit\",\n            \"intellij.javascript.impl/diagrams\",\n            \"intellij.javascript.sh\",\n            \"intellij.javascript.sharedIndexes\",\n            \"intellij.javascript.sharedIndexes.generator\",\n            \"intellij.less/copyright\",\n            \"intellij.less/watcher\",\n            \"intellij.markdown.fenceInjection\",\n            \"intellij.markdown.frontmatter\",\n            \"intellij.markdown.frontmatter.toml\",\n            \"intellij.markdown.frontmatter.yaml\",\n            \"intellij.nodeJS.remoteInterpreter/docker\",\n            \"intellij.performanceTesting.async.core\",\n            \"intellij.platform.images.copyright\",\n            \"intellij.profiler.asyncOne\",\n            \"intellij.profiler.asyncWindows\",\n            \"intellij.profiler.clion\",\n            \"intellij.profiler.common\",\n            \"intellij.qml.clionproject\",\n            \"intellij.qml.common\",\n            \"intellij.restClient/intelliLang\",\n            \"intellij.restClient/javaScript\",\n            \"intellij.restClient/microservicesUI\",\n            \"intellij.searchEverywhereMl.java\",\n            \"intellij.searchEverywhereMl.vcs\",\n            \"intellij.searchEverywhereMl.yaml\",\n            \"intellij.settingsSync.git\",\n            \"intellij.sh.copyright\",\n            \"intellij.sh.markdown\",\n            \"intellij.sh.python\",\n            \"intellij.sh.terminal\",\n            \"intellij.space.gateway\",\n            \"intellij.space.index\",\n            \"intellij.space.java\",\n            \"intellij.space.kotlin\",\n            \"intellij.space.kotlin.scripting\",\n            \"intellij.space.php\",\n            \"intellij.space.vcs\",\n            \"intellij.toml.json\",\n            \"intellij.vcs.github/tracker\",\n            \"intellij.vuejs/copyright\",\n            \"intellij.vuejs/prettier\",\n            \"intellij.webDeployment/phpStorm\"\n        ],\n        \"fileExtensions\": [\n            \"*.ane\",\n            \"*.ant\",\n            \"*.apinotes\",\n            \"*.apk\",\n            \"*.as\",\n            \"*.asm\",\n            \"*.ats\",\n            \"*.bash\",\n            \"*.bigtiff\",\n            \"*.bmp\",\n            \"*.c\",\n            \"*.c++\",\n            \"*.c++m\",\n            \"*.cc\",\n            \"*.ccm\",\n            \"*.cjs\",\n            \"*.cmake\",\n            \"*.cp\",\n            \"*.cpp\",\n            \"*.cppm\",\n            \"*.cql\",\n            \"*.css\",\n            \"*.csv\",\n            \"*.cts\",\n            \"*.cu\",\n            \"*.cuh\",\n            \"*.cxx\",\n            \"*.cxxm\",\n            \"*.dcx\",\n            \"*.ddl\",\n            \"*.dic\",\n            \"*.diff\",\n            \"*.doc\",\n            \"*.dockerfile\",\n            \"*.dockerignore\",\n            \"*.docx\",\n            \"*.doxygen\",\n            \"*.dtd\",\n            \"*.ear\",\n            \"*.egg\",\n            \"*.elt\",\n            \"*.ent\",\n            \"*.es\",\n            \"*.es6\",\n            \"*.fnc\",\n            \"*.fxml\",\n            \"*.gdbcommandsfiletypeextension\",\n            \"*.gif\",\n            \"*.gitignore\",\n            \"*.h\",\n            \"*.h++\",\n            \"*.har\",\n            \"*.hgignore\",\n            \"*.hh\",\n            \"*.hlp\",\n            \"*.hmap\",\n            \"*.hp\",\n            \"*.hpp\",\n            \"*.hql\",\n            \"*.htm\",\n            \"*.html\",\n            \"*.http\",\n            \"*.hxx\",\n            \"*.i\",\n            \"*.icc\",\n            \"*.icns\",\n            \"*.ico\",\n            \"*.ids\",\n            \"*.ignore\",\n            \"*.ii\",\n            \"*.ijperf\",\n            \"*.iml\",\n            \"*.inl\",\n            \"*.ino\",\n            \"*.ioc\",\n            \"*.ipp\",\n            \"*.ipr\",\n            \"*.iws\",\n            \"*.ixx\",\n            \"*.jar\",\n            \"*.jbig2\",\n            \"*.jhm\",\n            \"*.jnlp\",\n            \"*.jpeg\",\n            \"*.jpg\",\n            \"*.jql\",\n            \"*.jrxml\",\n            \"*.js\",\n            \"*.js.flow\",\n            \"*.js.map\",\n            \"*.js2\",\n            \"*.jsb2\",\n            \"*.jsb3\",\n            \"*.jshintrc\",\n            \"*.json\",\n            \"*.json5\",\n            \"*.jsonl\",\n            \"*.jsonlines\",\n            \"*.jsx\",\n            \"*.ld\",\n            \"*.ldjson\",\n            \"*.lds\",\n            \"*.less\",\n            \"*.lldbcommandsfiletypeextension\",\n            \"*.m\",\n            \"*.markdown\",\n            \"*.md\",\n            \"*.mdb\",\n            \"*.mjs\",\n            \"*.mk\",\n            \"*.mm\",\n            \"*.mod\",\n            \"*.modulemap\",\n            \"*.mts\",\n            \"*.mxx\",\n            \"*.natvis\",\n            \"*.ndjson\",\n            \"*.ng\",\n            \"*.odt\",\n            \"*.pam\",\n            \"*.patch\",\n            \"*.pbm\",\n            \"*.pch\",\n            \"*.pck\",\n            \"*.pcx\",\n            \"*.pdf\",\n            \"*.pgm\",\n            \"*.pkb\",\n            \"*.pks\",\n            \"*.pls\",\n            \"*.png\",\n            \"*.pnm\",\n            \"*.ppm\",\n            \"*.ppt\",\n            \"*.pptx\",\n            \"*.prc\",\n            \"*.psd\",\n            \"*.qml\",\n            \"*.qmltypes\",\n            \"*.redis\",\n            \"*.regexp\",\n            \"*.rest\",\n            \"*.rgbe\",\n            \"*.rnc\",\n            \"*.rng\",\n            \"*.sass\",\n            \"*.scss\",\n            \"*.sh\",\n            \"*.sht\",\n            \"*.shtm\",\n            \"*.shtml\",\n            \"*.snap\",\n            \"*.sql\",\n            \"*.svg\",\n            \"*.swc\",\n            \"*.tcc\",\n            \"*.tga\",\n            \"*.tif\",\n            \"*.tiff\",\n            \"*.tld\",\n            \"*.toml\",\n            \"*.tpb\",\n            \"*.tpp\",\n            \"*.tps\",\n            \"*.trg\",\n            \"*.ts\",\n            \"*.tsv\",\n            \"*.tsx\",\n            \"*.uml\",\n            \"*.vsd\",\n            \"*.vue\",\n            \"*.vw\",\n            \"*.war\",\n            \"*.wbmp\",\n            \"*.wsdl\",\n            \"*.xbm\",\n            \"*.xhtml\",\n            \"*.xls\",\n            \"*.xlsx\",\n            \"*.xml\",\n            \"*.xpath\",\n            \"*.xpath2\",\n            \"*.xpm\",\n            \"*.xsd\",\n            \"*.xsl\",\n            \"*.xslt\",\n            \"*.xul\",\n            \"*.yaml\",\n            \"*.yml\",\n            \"*.zip\",\n            \"*.zsh\",\n            \".babelrc\",\n            \".clang-format\",\n            \".clang-tidy\",\n            \".eslintrc\",\n            \".prettierrc\",\n            \".stylelintrc\",\n            \"CMakeCache.txt\",\n            \"CMakeLists.txt\",\n            \"Cargo.lock\",\n            \"Cargo.toml.orig\",\n            \"Dockerfile\",\n            \"Dockerfile.fast-jar\",\n            \"Dockerfile.jlink\",\n            \"Dockerfile.jvm\",\n            \"Dockerfile.legacy-jar\",\n            \"Dockerfile.native\",\n            \"Dockerfile.native-distroless\",\n            \"Dockerfile.native-micro\",\n            \"GNUmakefile\",\n            \"Gopkg.lock\",\n            \"Pipfile\",\n            \"_clang-format\",\n            \"bowerrc\",\n            \"exclude\",\n            \"http-client.cookies\",\n            \"jest.config\",\n            \"jshint.json\",\n            \"makefile\",\n            \"module.map\",\n            \"poetry.lock\",\n            \"tsconfig.app.json\",\n            \"tsconfig.e2e.json\",\n            \"tsconfig.editor.json\",\n            \"tsconfig.json\",\n            \"tsconfig.lib.json\",\n            \"tsconfig.spec.json\",\n            \"tsconfig.test.json\",\n            \"yarn.lock\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "RefreshAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/refresh",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"refresh"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RefreshAll",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/refresh",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "26"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 26 Jan 2023 22:19:36 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "Data updated successfully."
+				}
+			]
+		},
+		{
+			"name": "RefreshByProductCode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/refresh/{{code}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"refresh",
+						"{{code}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RefreshByProductCode",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/refresh/{{code}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"refresh",
+								"{{code}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 26 Jan 2023 22:21:28 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "Data updated successfully for product CL"
+				}
+			]
+		}
+	]
+}

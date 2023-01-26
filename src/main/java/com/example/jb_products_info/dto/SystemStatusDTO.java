@@ -23,7 +23,7 @@ public class SystemStatusDTO {
     private Integer countProducts;
     private Set<String> productCodes;
     private Integer countBuilds;
-    private Integer downloadedBuilds;
+    private Integer buildsDownloaded;
     private Integer buildsDownloading;
     private Integer buildsDownloadQueue;
     private Integer buildsWithoutLinuxVersion;
@@ -36,7 +36,7 @@ public class SystemStatusDTO {
                 ", countProducts=" + countProducts +
                 ", productCodes=" + productCodes +
                 ", countBuilds=" + countBuilds +
-                ", downloadedBuilds=" + downloadedBuilds +
+                ", buildsDownloaded=" + buildsDownloaded +
                 ", buildsDownloading=" + buildsDownloading +
                 ", buildsDownloadQueue=" + buildsDownloadQueue +
                 ", buildsWithoutLinuxVersion=" + buildsWithoutLinuxVersion +

@@ -7,6 +7,7 @@ import com.example.jb_products_info.services.InfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +27,70 @@ public class InfoController {
         this.infoService = infoService;
     }
 
-    @GetMapping
-    public void statusForHuman() {
-        //TODO: implement
+    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+    public String statusForHuman() {
+        logger.info("Providing general status of the system");
+        SystemStatusDTO status = infoService.getStatus();
+        String html = """
+                <html>
+                <header>
+                    <title>
+                        Status
+                    </title>
+                </header>
+                <body>
+                <h1>Status:</h1>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Last updated</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Server timezone</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Total products stored</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Total builds stored</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Total builds with product-info.json data</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Builds downloading now</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Builds waiting for download</td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Builds without Linux version</td>
+                        <td>%s</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h2>Products:</h2>
+                <p>%s</p>
+                </body>
+                </html>
+                """;
+        return String.format(html,
+                status.getLastUpdated(),
+                status.getServerTimezone(),
+                status.getCountProducts(),
+                status.getCountBuilds(),
+                status.getBuildsDownloaded(),
+                status.getBuildsDownloading(),
+                status.getBuildsDownloadQueue(),
+                status.getBuildsWithoutLinuxVersion(),
+                status.getProductCodes()); //view
     }
 
     @GetMapping("status")
