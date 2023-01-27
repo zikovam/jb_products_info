@@ -13,13 +13,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import static com.example.jb_products_info.utils.Constants.ERROR_FIND_UPDATE_XML;
-import static com.example.jb_products_info.utils.Constants.ERROR_PARSING_UPDATE_XML;
 import static com.example.jb_products_info.utils.Constants.UPDATE_XML_FILE_PATH;
 
 @Service
@@ -49,24 +45,14 @@ public class RefreshService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void collectDataAfterStartup() {
-        try {
-            dataSource.downloadFileByUrl(jetbrainsUpdateFileUrl, UPDATE_XML_FILE_PATH);
-            List<Product> products = fileParserService.collectProducts();
-            productService.upsertAll(products);
-            continueDownloading();
-        } catch (FileNotFoundException e) {
-            logger.error(ERROR_FIND_UPDATE_XML);
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ERROR_FIND_UPDATE_XML, e);
-        } catch (XMLStreamException e) {
-            logger.error(ERROR_PARSING_UPDATE_XML);
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, ERROR_PARSING_UPDATE_XML, e);
-        }
+        dataSource.downloadFileByUrl(jetbrainsUpdateFileUrl, UPDATE_XML_FILE_PATH);
+        List<Product> products = fileParserService.collectProducts();
+        productService.upsertAll(products);
+        continueDownloading();
     }
 
     @Scheduled(cron = "@hourly")
-    public void updateData() throws IOException, XMLStreamException {
+    public void updateData() throws IOException {
         dataSource.downloadFileByUrl(jetbrainsUpdateFileUrl, UPDATE_XML_FILE_PATH);
         List<Product> products = fileParserService.collectProducts();
         List<Build> builds = productService.upsertAll(products);
@@ -79,7 +65,7 @@ public class RefreshService {
         buildDownloadService.downloadMultipleBuildsForProductAndExtractFile(builds);
     }
 
-    public void updateData(String productCode) throws IOException, XMLStreamException {
+    public void updateData(String productCode) throws IOException {
         dataSource.downloadFileByUrl(jetbrainsUpdateFileUrl, UPDATE_XML_FILE_PATH);
         Product product = fileParserService.collectProduct(productCode);
         if (product != null) {

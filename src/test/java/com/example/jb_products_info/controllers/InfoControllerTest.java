@@ -61,7 +61,7 @@ class InfoControllerTest {
                 .andExpect(jsonPath("$.countProducts", is(productCodes.size())))
                 .andExpect(jsonPath("$.productCodes", hasSize(3)))
                 .andExpect(jsonPath("$.countBuilds", is(700)))
-                .andExpect(jsonPath("$.downloadedBuilds", is(100)))
+                .andExpect(jsonPath("$.buildsDownloaded", is(100)))
                 .andExpect(jsonPath("$.buildsDownloading", is(5)))
                 .andExpect(jsonPath("$.buildsDownloadQueue", is(545)))
                 .andExpect(jsonPath("$.buildsWithoutLinuxVersion", is(50)));

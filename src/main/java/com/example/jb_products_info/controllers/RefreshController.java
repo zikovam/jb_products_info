@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static com.example.jb_products_info.utils.Constants.ERROR_FIND_UPDATE_XML;
-import static com.example.jb_products_info.utils.Constants.ERROR_PARSING_UPDATE_XML;
 import static com.example.jb_products_info.utils.Constants.ERROR_SAVE_UPDATE_XML;
 
 @RestController
@@ -41,9 +39,6 @@ public class RefreshController {
         } catch (IOException e) {
             logger.error(ERROR_SAVE_UPDATE_XML);
             return new ResponseEntity<>(ERROR_SAVE_UPDATE_XML, HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (XMLStreamException e) {
-            logger.error(ERROR_PARSING_UPDATE_XML);
-            return new ResponseEntity<>(ERROR_PARSING_UPDATE_XML, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -59,9 +54,6 @@ public class RefreshController {
         } catch (IOException e) {
             logger.error(ERROR_SAVE_UPDATE_XML);
             return new ResponseEntity<>(ERROR_SAVE_UPDATE_XML, HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (XMLStreamException e) {
-            logger.error(ERROR_PARSING_UPDATE_XML);
-            return new ResponseEntity<>(ERROR_PARSING_UPDATE_XML, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

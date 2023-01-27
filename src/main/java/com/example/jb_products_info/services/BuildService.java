@@ -5,8 +5,6 @@ import com.example.jb_products_info.dto.ProductInfoDTO;
 import com.example.jb_products_info.entities.Build;
 import com.example.jb_products_info.repositories.BuildRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +12,6 @@ import java.util.List;
 
 @Service
 public class BuildService {
-    private static final Logger logger = LoggerFactory.getLogger(BuildService.class);
-
     private final BuildRepository buildRepository;
 
     public BuildService(BuildRepository buildRepository) {
@@ -23,7 +19,6 @@ public class BuildService {
     }
 
     public BuildInfoDTO convertToBuildInfoDTO(Build build) {
-        logger.info("converting build {} for product {}", build.getBuildNumber(), build.getProduct().getCode());
         String buildNumber = build.getBuildNumber();
         if (build.getProductInfoJsonData() != null) {
             ObjectMapper mapper = new ObjectMapper();

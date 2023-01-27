@@ -11,9 +11,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.xml.XMLConstants;
@@ -32,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.jb_products_info.utils.Constants.ERROR_FIND_UPDATE_XML;
+import static com.example.jb_products_info.utils.Constants.ERROR_PARSING_UPDATE_XML;
 import static com.example.jb_products_info.utils.Constants.UPDATE_XML_FILE_PATH;
 
 @Service
@@ -42,7 +46,7 @@ public class FileParserService {
     @Value("${codes.duplicated}")
     private List<String> codesToAvoid;
 
-    public Product collectProduct(String productCode) throws XMLStreamException, FileNotFoundException {
+    public Product collectProduct(String productCode) {
         for (Product product : collectProducts()) {
             if (product.getCode().equals(productCode)) {
                 return product;
@@ -51,14 +55,25 @@ public class FileParserService {
         return null;
     }
 
-    public List<Product> collectProducts() throws FileNotFoundException, XMLStreamException {
+    public List<Product> collectProducts() {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         // preventing xxe
         xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
         logger.info("parsing update.xml from file {}", UPDATE_XML_FILE_PATH);
-        List<Product> products = parseUpdateXmlProducts(xmlInputFactory);
+        List<Product> products;
+        try {
+            products = parseUpdateXmlProducts(xmlInputFactory);
+        } catch (FileNotFoundException e) {
+            logger.error(ERROR_FIND_UPDATE_XML);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ERROR_FIND_UPDATE_XML, e);
+        } catch (XMLStreamException e) {
+            logger.error(ERROR_PARSING_UPDATE_XML);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, ERROR_PARSING_UPDATE_XML, e);
+        }
 
         logger.info("found products in file: {}", products.size());
         logger.info("adding information about builds for products");
