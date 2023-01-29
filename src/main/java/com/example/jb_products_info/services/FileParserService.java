@@ -7,44 +7,37 @@ import com.example.jb_products_info.entities.build_info.Release;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.example.jb_products_info.utils.Constants.ERROR_FIND_UPDATE_XML;
 import static com.example.jb_products_info.utils.Constants.ERROR_PARSING_UPDATE_XML;
 import static com.example.jb_products_info.utils.Constants.UPDATE_XML_FILE_PATH;
 
 @Service
 public class FileParserService {
     final Logger logger = LoggerFactory.getLogger(FileParserService.class);
-    @Value("${download.build.info.url}")
-    private String buildInfoDataDownloadUrl;
+
     @Value("${codes.duplicated}")
     private List<String> codesToAvoid;
+
+    private final DataSource dataSource;
+
+    public FileParserService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public Product collectProduct(String productCode) {
         for (Product product : collectProducts()) {
@@ -56,25 +49,15 @@ public class FileParserService {
     }
 
     public List<Product> collectProducts() {
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        // preventing xxe
-        xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-        xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-
         logger.info("parsing update.xml from file {}", UPDATE_XML_FILE_PATH);
         List<Product> products;
         try {
-            products = parseUpdateXmlProducts(xmlInputFactory);
-        } catch (FileNotFoundException e) {
-            logger.error(ERROR_FIND_UPDATE_XML);
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ERROR_FIND_UPDATE_XML, e);
+            products = parseUpdateXmlProducts(UPDATE_XML_FILE_PATH);
         } catch (XMLStreamException e) {
             logger.error(ERROR_PARSING_UPDATE_XML);
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, ERROR_PARSING_UPDATE_XML, e);
         }
-
         logger.info("found products in file: {}", products.size());
         logger.info("adding information about builds for products");
         addBuildInfos(products);
@@ -82,10 +65,10 @@ public class FileParserService {
         return products;
     }
 
-    private List<Product> parseUpdateXmlProducts(XMLInputFactory xmlInputFactory) throws XMLStreamException, FileNotFoundException {
+    private List<Product> parseUpdateXmlProducts(String filePath) throws XMLStreamException {
         List<Product> products = new ArrayList<>();
 
-        XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(UPDATE_XML_FILE_PATH));
+        XMLEventReader reader = dataSource.getXmlEventReaderForFile(filePath);
 
         Product product = null;
         while (reader.hasNext()) {
@@ -119,7 +102,8 @@ public class FileParserService {
             }
             if (event.isEndElement()) {
                 EndElement endElement = event.asEndElement();
-                if (endElement.getName().getLocalPart().equals("product")) {
+                if (endElement.getName().getLocalPart().equals("product")
+                        && product.getCode() != null) {
                     products.add(product);
                 }
             }
@@ -129,9 +113,10 @@ public class FileParserService {
 
     private void addBuildInfos(List<Product> products) {
         for (Product product : products) {
-            JbDataServiceResponse productInfo = getJbDataServiceResponse(product);
+            JbDataServiceResponse productInfo = dataSource.getJbDataServiceResponseForProduct(product);
 
             List<Build> builds = new ArrayList<>();
+
             List<Release> releases = productInfo.getReleases();
 
             for (Release release : releases) {
@@ -150,24 +135,5 @@ public class FileParserService {
             }
             product.setBuilds(builds);
         }
-    }
-
-    private JbDataServiceResponse getJbDataServiceResponse(Product product) {
-        RestTemplate restTemplate = new RestTemplate();
-        UriComponentsBuilder uriBuilder =
-                UriComponentsBuilder.fromUriString(buildInfoDataDownloadUrl)
-                        .queryParam("code", product.getCode());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("accept", "application/json");
-
-        ResponseEntity<List<JbDataServiceResponse>> response = restTemplate.exchange(
-                uriBuilder.build().toUriString(),
-                HttpMethod.GET,
-                new HttpEntity<>(null, headers),
-                new ParameterizedTypeReference<>() {
-                });
-
-        return Objects.requireNonNull(response.getBody()).get(0);
     }
 }
