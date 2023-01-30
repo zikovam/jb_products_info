@@ -21,7 +21,7 @@ class RefreshControllerTest {
     RefreshService refreshService;
 
     @Test
-    void whenRefreshInformation_thenOkResponse() throws Exception{
+    void testUpdateData_allOk() throws Exception{
         mockMvc.perform(get("/refresh"))
                 .andExpect(status().isOk());
 
@@ -30,7 +30,7 @@ class RefreshControllerTest {
     }
 
     @Test
-    void whenRefreshInformationForProduct_thenOkResponse() throws Exception{
+    void testUpdateDataForProduct_allOk() throws Exception{
         mockMvc.perform(get("/refresh/CODE"))
                 .andExpect(status().isOk());
 

@@ -36,7 +36,7 @@ class InfoControllerTest {
     InfoService infoService;
 
     @Test
-    void whenGetStatus_thenStatusProvided() throws Exception {
+    void testGetStatus_allOk() throws Exception {
         LocalDateTime now = LocalDateTime.of(2023, 1, 15, 10, 20, 30);
         Set<String> productCodes = Set.of("CODE", "FOR", "TEST");
 
@@ -71,7 +71,7 @@ class InfoControllerTest {
     }
 
     @Test
-    void whenGetBuildInfosByWrongCode_thenNotFound() throws Exception {
+    void testGetBuildInfosByWrongCode_notFound() throws Exception {
         given(infoService.getBuildInfosByCode(anyString())).willReturn(List.of());
 
         mockMvc.perform(get("/CODE")
@@ -83,7 +83,7 @@ class InfoControllerTest {
     }
 
     @Test
-    void whenGetBuildInfoByWrongCodeAndBuild_thenNotFound() throws Exception {
+    void testGetBuildInfo_notFound() throws Exception {
         given(infoService.getBuildInfo(anyString(), anyString())).willReturn(null);
 
         mockMvc.perform(get("/CODE/testBuild")
@@ -95,7 +95,7 @@ class InfoControllerTest {
     }
 
     @Test
-    void whenGetBuildInfosByCorrectCode_thenBuildWithNullInfo() throws Exception {
+    void testGetBuildInfosByCode_gotBuildWithNullInfo() throws Exception {
         BuildInfoDTO build = new BuildInfoDTO();
         String buildNumber = "test-build-number";
         build.setBuildNumber(buildNumber);
@@ -115,7 +115,7 @@ class InfoControllerTest {
     }
 
     @Test
-    void whenGetBuildInfosByCorrectCode_thenListProvided() throws Exception {
+    void testGetBuildInfosByCode_allOk() throws Exception {
         ProductInfoDTO productInfo = new ProductInfoDTO();
         String productName = "Test Product";
         productInfo.setName(productName);
@@ -143,7 +143,7 @@ class InfoControllerTest {
     }
 
     @Test
-    void whenGetBuildInfoByCorrectCode_thenBuildWithNullInfo() throws Exception {
+    void testGetBuildInfo_gotBuildWithNullInfo() throws Exception {
         BuildInfoDTO build = new BuildInfoDTO();
         String buildNumber = "test-build-number";
         build.setBuildNumber(buildNumber);
@@ -161,7 +161,7 @@ class InfoControllerTest {
     }
 
     @Test
-    void whenGetBuildInfoByCorrectCode_thenListProvided() throws Exception {
+    void testGetBuildInfo_allOk() throws Exception {
         ProductInfoDTO productInfo = new ProductInfoDTO();
         String productName = "Test Product";
         productInfo.setName(productName);
