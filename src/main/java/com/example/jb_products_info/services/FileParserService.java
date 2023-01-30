@@ -91,10 +91,8 @@ public class FileParserService {
                         if (Objects.requireNonNull(product).getCode() == null) {
                             product.setCode(code);
                         } else {
-                            String name = product.getName();
                             products.add(product);
                             product = new Product();
-                            product.setName(name);
                             product.setCode(code);
                         }
                     }
@@ -115,6 +113,7 @@ public class FileParserService {
         for (Product product : products) {
             JbDataServiceResponse productInfo = dataSource.getJbDataServiceResponseForProduct(product);
 
+            product.setName(productInfo.getName());
             List<Build> builds = new ArrayList<>();
 
             List<Release> releases = productInfo.getReleases();

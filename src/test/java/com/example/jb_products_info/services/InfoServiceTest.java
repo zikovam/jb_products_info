@@ -140,7 +140,7 @@ class InfoServiceTest {
         assertEquals(5, status.getBuildsDownloading());
         assertEquals(100, status.getBuildsDownloadQueue());
         assertEquals(2, status.getBuildsWithoutLinuxVersion());
-        assertEquals(build1.getUpdatedDateTime(), status.getLastUpdated());
+        assertEquals(build1.getUpdatedDateTime(), status.getDatabaseLastUpdated());
 
 
         verify(buildService, times(1)).findAll();

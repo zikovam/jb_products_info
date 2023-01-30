@@ -43,7 +43,7 @@ public class InfoController {
                 <table>
                     <tbody>
                     <tr>
-                        <td>Last updated</td>
+                        <td>Database last updated</td>
                         <td>%s</td>
                     </tr>
                     <tr>
@@ -82,7 +82,7 @@ public class InfoController {
                 </html>
                 """;
         return String.format(html,
-                status.getLastUpdated(),
+                status.getDatabaseLastUpdated(),
                 status.getServerTimezone(),
                 status.getCountProducts(),
                 status.getCountBuilds(),

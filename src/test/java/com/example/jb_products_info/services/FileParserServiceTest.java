@@ -56,7 +56,7 @@ class FileParserServiceTest {
 
     @Test
     void testCollectProducts_collectTwoProductsOfThreePresented() throws Exception {
-        String path = "src/test/resources/update.xml";
+        String path = "src/test/resources/__files/update.xml";
         File file = new File(path);
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLEventReader reader = factory.createXMLEventReader(new FileReader(file));
@@ -102,7 +102,7 @@ class FileParserServiceTest {
 
     @Test
     void testCollectProductByCode_allOk() throws Exception {
-        String path = "src/test/resources/update.xml";
+        String path = "src/test/resources/__files/update.xml";
         File file = new File(path);
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLEventReader reader = factory.createXMLEventReader(new FileReader(file));

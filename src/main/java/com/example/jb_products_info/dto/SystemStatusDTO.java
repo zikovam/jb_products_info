@@ -18,7 +18,7 @@ import java.util.Set;
 @Builder
 @Component
 public class SystemStatusDTO {
-    private LocalDateTime lastUpdated;
+    private LocalDateTime databaseLastUpdated;
     private ZoneId serverTimezone;
     private Integer countProducts;
     private Set<String> productCodes;
@@ -31,15 +31,15 @@ public class SystemStatusDTO {
     @Override
     public String toString() {
         return "SystemStatusDTO{" +
-                "lastUpdated=" + lastUpdated +
-                ", serverTimezone=" + serverTimezone +
-                ", countProducts=" + countProducts +
-                ", productCodes=" + productCodes +
-                ", countBuilds=" + countBuilds +
-                ", buildsDownloaded=" + buildsDownloaded +
-                ", buildsDownloading=" + buildsDownloading +
-                ", buildsDownloadQueue=" + buildsDownloadQueue +
-                ", buildsWithoutLinuxVersion=" + buildsWithoutLinuxVersion +
-                '}';
+               "databaseLastUpdated=" + databaseLastUpdated +
+               ", serverTimezone=" + serverTimezone +
+               ", countProducts=" + countProducts +
+               ", productCodes=" + productCodes +
+               ", countBuilds=" + countBuilds +
+               ", buildsDownloaded=" + buildsDownloaded +
+               ", buildsDownloading=" + buildsDownloading +
+               ", buildsDownloadQueue=" + buildsDownloadQueue +
+               ", buildsWithoutLinuxVersion=" + buildsWithoutLinuxVersion +
+               '}';
     }
 }

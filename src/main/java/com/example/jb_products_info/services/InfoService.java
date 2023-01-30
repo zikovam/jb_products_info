@@ -69,7 +69,7 @@ public class InfoService {
                 .buildsDownloading(executor.getActiveCount())
                 .buildsDownloadQueue(executor.getQueueSize())
                 .buildsWithoutLinuxVersion(buildsWithoutLinuxVersion)
-                .lastUpdated(builds.stream()
+                .databaseLastUpdated(builds.stream()
                         .map(Build::getUpdatedDateTime)
                         .max(Comparator.naturalOrder())
                         .orElse(LocalDateTime.MIN))

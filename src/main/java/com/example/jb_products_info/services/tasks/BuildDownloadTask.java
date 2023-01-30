@@ -25,7 +25,7 @@ public class BuildDownloadTask {
         return CompletableFuture.completedFuture(downloadBuildAndExtractFile(url, targetFile, buildNumber));
     }
 
-    public static String downloadBuildAndExtractFile(String url,
+    public String downloadBuildAndExtractFile(String url,
                                                      String targetFile,
                                                      String buildNumber) throws IOException {
         URL fileSource = new URL(url);

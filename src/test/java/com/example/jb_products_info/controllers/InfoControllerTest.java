@@ -41,7 +41,7 @@ class InfoControllerTest {
         Set<String> productCodes = Set.of("CODE", "FOR", "TEST");
 
         SystemStatusDTO status = SystemStatusDTO.builder()
-                .lastUpdated(now)
+                .databaseLastUpdated(now)
                 .serverTimezone(ZoneId.systemDefault())
                 .countProducts(productCodes.size())
                 .productCodes(productCodes)
@@ -56,7 +56,7 @@ class InfoControllerTest {
         mockMvc.perform(get("/status")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.lastUpdated", is(now.toString())))
+                .andExpect(jsonPath("$.databaseLastUpdated", is(now.toString())))
                 .andExpect(jsonPath("$.serverTimezone", is(ZoneId.systemDefault().toString())))
                 .andExpect(jsonPath("$.countProducts", is(productCodes.size())))
                 .andExpect(jsonPath("$.productCodes", hasSize(3)))
